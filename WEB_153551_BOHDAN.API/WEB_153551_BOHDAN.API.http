@@ -1,0 +1,6 @@
+@WEB_153551_BOHDAN.API_HostAddress = http://localhost:5096
+
+GET {{WEB_153551_BOHDAN.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

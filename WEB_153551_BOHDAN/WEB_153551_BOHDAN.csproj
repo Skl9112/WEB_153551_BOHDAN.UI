@@ -17,4 +17,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WEB_153551_BOHDAN.API\WEB_153551_BOHDAN.API.csproj" />
+    <ProjectReference Include="..\WEB_153551_BOHDAN.UI.Domain\WEB_153551_BOHDAN.UI.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

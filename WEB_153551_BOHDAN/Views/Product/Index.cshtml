@@ -1,0 +1,67 @@
+﻿@model List<WEB_153551_BOHDAN.UI.Domain.Entities.Dish>
+@inject WEB_153551_BOHDAN.Services.CategoryService.ICategoryService CategoryService
+
+@{
+    ViewData["Title"] = "Меню";
+    var categories = CategoryService.GetCategoryListAsync().Result.Data;
+    string? selectedCategory = ViewBag.SelectedCategory ?? "Все категории";
+    var request = ViewContext.HttpContext.Request;
+    var returnUrl = request.Path + request.QueryString.ToUriComponent();
+}
+
+<h2 class="text-center my-4">Меню ресторана</h2>
+
+<!-- Фильтр категорий -->
+<div class="dropdown mb-3 text-center">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        @selectedCategory
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+        <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">Все категории</a></li>
+        @foreach (var category in categories)
+        {
+            <li><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-categoryNormalizedName="@category.NormalizedName">@category.Name</a></li>
+        }
+    </ul>
+</div>
+
+<!-- Список блюд -->
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var product in Model)
+        {
+            <div class="card" style="width: 18rem;">
+                <img src="@product.Image" class="card-img-top" alt="@product.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+
+                    <a asp-controller="Cart" asp-action="Add"
+                       asp-route-id="@product.Id"
+                       asp-route-returnUrl="@returnUrl"
+                       class="btn btn-primary">
+                        Добавить в корзину
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
